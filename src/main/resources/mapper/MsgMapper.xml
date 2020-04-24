@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.awb.mapper.MsgMapper">
+
+    <resultMap type="com.awb.entity.Msg" id="MsgMap">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="time" column="time" jdbcType="VARCHAR"/>
+        <result property="msg" column="msg" jdbcType="VARCHAR"/>
+        <result property="uid" column="uid" jdbcType="INTEGER"/>
+        <result property="status" column="status" jdbcType="INTEGER"/>
+        <result property="delDate" column="del_date" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <resultMap id="MsgAndUserMap" type="com.awb.entity.vo.MsgAndUser" extends="MsgMap">
+        <association property="user"  javaType="com.awb.entity.User">
+            <!--<result property="id" column="id" jdbcType="INTEGER"/>-->
+            <result property="username" column="username" jdbcType="VARCHAR"/>
+            <result property="password" column="password" jdbcType="VARCHAR"/>
+            <result property="nickname" column="nickname" jdbcType="VARCHAR"/>
+        </association>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="MsgMap">
+        select
+          id, time, msg, uid,status,del_date
+        from jin.msg
+        where id = #{id}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="MsgMap">
+        select
+          id, time, msg, uid,status,del_date
+        from jin.msg
+    </select>
+
+    <!--联合查询-->
+    <select id="queryMsgAndUserByLimit" resultMap="MsgAndUserMap">
+        select
+          a.id, a.time, a.msg, a.uid,b.nickname
+        from jin.msg a inner join user b on a.uid=b.id where a.status = 1  order by id desc
+    </select>
+
+    <!--联合查询-->
+    <select id="queryMsgAndUserByUid" resultMap="MsgAndUserMap" parameterType="Integer">
+        select
+          a.id, a.time, a.msg, a.uid,b.nickname
+        from jin.msg a inner join user b on a.uid=b.id  where a.status = 1 and a.uid=#{uid} order by id desc
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="MsgMap">
+        select
+          id, time, msg, uid,status,del_date
+        from jin.msg
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="time != null and time != ''">
+                and time = #{time}
+            </if>
+            <if test="msg != null and msg != ''">
+                and msg = #{msg}
+            </if>
+            <if test="uid != null">
+                and uid = #{uid}
+            </if>
+            <if test="status != null">
+                and status = #{status}
+            </if>
+            <if test="delDate != null">
+                and del_date = #{delDate}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into jin.msg(time, msg, uid,status)
+        values (#{time}, #{msg}, #{uid},1)
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update jin.msg
+        <set>
+            <if test="time != null and time != ''">
+                time = #{time},
+            </if>
+            <if test="msg != null and msg != ''">
+                msg = #{msg},
+            </if>
+            <if test="uid != null">
+                uid = #{uid},
+            </if>
+            <if test="status != null">
+                status = #{status},
+            </if>
+            <if test="delDate != null">
+                del_date = #{delDate},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from jin.msg where id = #{id}
+    </delete>
+
+</mapper>

@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.awb.mapper.CastsMapper">
+
+    <resultMap type="com.awb.entity.Casts" id="CastsMap">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="date" column="date" jdbcType="VARCHAR"/>
+        <result property="dayweather" column="dayweather" jdbcType="VARCHAR"/>
+        <result property="nightweather" column="nightweather" jdbcType="VARCHAR"/>
+        <result property="daytemp" column="daytemp" jdbcType="VARCHAR"/>
+        <result property="nighttemp" column="nighttemp" jdbcType="VARCHAR"/>
+        <result property="daywind" column="daywind" jdbcType="VARCHAR"/>
+        <result property="nightwind" column="nightwind" jdbcType="VARCHAR"/>
+        <result property="daypower" column="daypower" jdbcType="VARCHAR"/>
+        <result property="nightpower" column="nightpower" jdbcType="VARCHAR"/>
+        <result property="fid" column="fid" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="CastsMap">
+        select
+          id, date, dayweather, nightweather, daytemp, nighttemp, daywind, nightwind, daypower, nightpower, fid
+        from jin.casts
+        where id = #{id}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="CastsMap">
+        select
+          id, date, dayweather, nightweather, daytemp, nighttemp, daywind, nightwind, daypower, nightpower, fid
+        from jin.casts
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="CastsMap">
+        select
+          id, date, dayweather, nightweather, daytemp, nighttemp, daywind, nightwind, daypower, nightpower, fid
+        from jin.casts
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="date != null and date != ''">
+                and date = #{date}
+            </if>
+            <if test="dayweather != null and dayweather != ''">
+                and dayweather = #{dayweather}
+            </if>
+            <if test="nightweather != null and nightweather != ''">
+                and nightweather = #{nightweather}
+            </if>
+            <if test="daytemp != null and daytemp != ''">
+                and daytemp = #{daytemp}
+            </if>
+            <if test="nighttemp != null and nighttemp != ''">
+                and nighttemp = #{nighttemp}
+            </if>
+            <if test="daywind != null and daywind != ''">
+                and daywind = #{daywind}
+            </if>
+            <if test="nightwind != null and nightwind != ''">
+                and nightwind = #{nightwind}
+            </if>
+            <if test="daypower != null and daypower != ''">
+                and daypower = #{daypower}
+            </if>
+            <if test="nightpower != null and nightpower != ''">
+                and nightpower = #{nightpower}
+            </if>
+            <if test="fid != null">
+                and fid = #{fid}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into jin.casts(date, dayweather, nightweather, daytemp, nighttemp, daywind, nightwind, daypower, nightpower, fid)
+        values (#{date}, #{dayweather}, #{nightweather}, #{daytemp}, #{nighttemp}, #{daywind}, #{nightwind}, #{daypower}, #{nightpower}, #{fid})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update jin.casts
+        <set>
+            <if test="date != null and date != ''">
+                date = #{date},
+            </if>
+            <if test="dayweather != null and dayweather != ''">
+                dayweather = #{dayweather},
+            </if>
+            <if test="nightweather != null and nightweather != ''">
+                nightweather = #{nightweather},
+            </if>
+            <if test="daytemp != null and daytemp != ''">
+                daytemp = #{daytemp},
+            </if>
+            <if test="nighttemp != null and nighttemp != ''">
+                nighttemp = #{nighttemp},
+            </if>
+            <if test="daywind != null and daywind != ''">
+                daywind = #{daywind},
+            </if>
+            <if test="nightwind != null and nightwind != ''">
+                nightwind = #{nightwind},
+            </if>
+            <if test="daypower != null and daypower != ''">
+                daypower = #{daypower},
+            </if>
+            <if test="nightpower != null and nightpower != ''">
+                nightpower = #{nightpower},
+            </if>
+            <if test="fid != null">
+                fid = #{fid},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from jin.casts where id = #{id}
+    </delete>
+
+</mapper>

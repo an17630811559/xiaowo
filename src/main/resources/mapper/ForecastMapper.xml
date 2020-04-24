@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.awb.mapper.ForecastMapper">
+
+    <resultMap type="com.awb.entity.Forecast" id="ForecastMap">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="city" column="city" jdbcType="VARCHAR"/>
+        <result property="adcode" column="adcode" jdbcType="VARCHAR"/>
+        <result property="province" column="province" jdbcType="VARCHAR"/>
+        <result property="reporttime" column="reporttime" jdbcType="VARCHAR"/>
+    </resultMap>
+
+
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="ForecastMap">
+        select
+          id, city, adcode, province, reporttime
+        from jin.forecast
+        where id = #{id}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="ForecastMap">
+        select
+          id, city, adcode, province, reporttime
+        from jin.forecast
+        limit #{offset}, #{limit}
+    </select>
+
+    <select id="getdata" resultType="com.awb.entity.vo.ForecastAndCasts2" parameterType="String">
+        select a.id, a.city, a.adcode, a.province, a.reporttime,b.date, b.dayweather, b.nightweather, b.daytemp, b.nighttemp, b.daywind, b.nightwind, b.daypower, b.nightpower, b.fid from forecast a LEFT join casts b on a.id=b.fid  where fid in ( select max(id) as id from forecast where adcode= #{city} GROUP BY adcode )
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="ForecastMap">
+        select
+          id, city, adcode, province, reporttime
+        from jin.forecast
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="city != null and city != ''">
+                and city = #{city}
+            </if>
+            <if test="adcode != null and adcode != ''">
+                and adcode = #{adcode}
+            </if>
+            <if test="province != null and province != ''">
+                and province = #{province}
+            </if>
+            <if test="reporttime != null and reporttime != ''">
+                and reporttime = #{reporttime}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into jin.forecast(city, adcode, province, reporttime)
+        values (#{city}, #{adcode}, #{province}, #{reporttime})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update jin.forecast
+        <set>
+            <if test="city != null and city != ''">
+                city = #{city},
+            </if>
+            <if test="adcode != null and adcode != ''">
+                adcode = #{adcode},
+            </if>
+            <if test="province != null and province != ''">
+                province = #{province},
+            </if>
+            <if test="reporttime != null and reporttime != ''">
+                reporttime = #{reporttime},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from jin.forecast where id = #{id}
+    </delete>
+
+</mapper>

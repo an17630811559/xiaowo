@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en"  xmlns:th="http://www.thymeleaf.org">
+<head>
+</head>
+<body>
+<header th:fragment="myheader">
+
+<div class="fh5co-hero" data-section="home" >
+    <div class="fh5co-overlay"></div>
+    <div class="fh5co-cover text-center img-responsive  center-block" data-stellar-background-ratio="0.5" style="background-image: url(images/cover_bg_1.jpg);">
+        <div class="display-t">
+            <div class="display-tc">
+                <div class="container">
+                    <div class="col-md-10 col-md-offset-1">
+                        <div class="animate-box">
+                            <h1>挚爱</h1>
+                            <h2>安文博 &amp; 张矜</h2>
+                            <p><span id="time"></span></p>
+                            <script>
+                                $(function () {
+                                    getdate();
+                                })
+                            </script>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<header id="fh5co-header-section" class="sticky-banner">
+    <div class="container">
+        <div class="nav-header">
+            <a  class="js-fh5co-nav-toggle fh5co-nav-toggle dark"><i></i></a>
+            <h1 id="fh5co-logo"><a href="/toIndex">Nuptial</a></h1>
+            <!-- START #fh5co-menu-wrap -->
+            <nav id="fh5co-menu-wrap" role="navigation" style="">
+                <ul class="sf-menu" id="fh5co-primary-menu" >
+                    <li class="goto"><a href="/toIndex" >主页</a></li>
+                    <li><a class="goto"  href="/toForecast" >天气</a></li>
+                    <li><a class="goto"  href="/toMessage" >留言板</a></li>
+                    <li><a class="goto"  href="/toSearch" >查询最后登录时间</a></li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+</header>
+</header>
+
+</body>
+</html>

@@ -1,0 +1,12 @@
+.fore{height: 600px;color: black;margin-bottom: 0px;}
+.forebg{background: url("/images/tianqibg.jpg") no-repeat;background-size:cover;border-radius: 20px;}
+.city-button div{text-align: center;}
+.city-button div button{width: 80%}
+.tianqihr{margin-bottom: 0px;height:3px; }
+.city h1{margin-top: 10%;font-size: 50px;margin-bottom: 5px;color: white;text-align: center;}
+.last{color: #5e5e5e;text-align: center;font-size: 13px;}
+.foreInfo{margin-top: 45%;}
+.foreInfo .tianqi{font-size: 50px;}
+.foreInfo .miaoshu{font-size: 70px;margin-bottom: -10px;}
+.foreInfo .weilaibg{background:rgba(255,255,255,0.3);padding: 0;margin-left: 0px;border-radius: 10px;}
+.foreInfo .weilai{border: 1px solid black;height: 130px;width: 98%;margin: 5px 3px;padding: 2px;border-radius: 10px;text-align: center;font-size: 15px;}

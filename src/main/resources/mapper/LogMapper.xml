@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.awb.mapper.LogMapper">
+
+    <resultMap type="com.awb.entity.Log" id="LogMap">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="user" column="user" jdbcType="VARCHAR"/>
+        <result property="exeuTime" column="exeu_time" jdbcType="VARCHAR"/>
+        <result property="createDate" column="create_date" jdbcType="VARCHAR"/>
+        <result property="remark" column="remark" jdbcType="VARCHAR"/>
+        <result property="className" column="class_name" jdbcType="VARCHAR"/>
+        <result property="methodName" column="method_name" jdbcType="VARCHAR"/>
+        <result property="params" column="params" jdbcType="VARCHAR"/>
+        <result property="ipAdress" column="ip_adress" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="LogMap">
+        select
+          id, user, exeu_time, create_date, remark, class_name, method_name, params,ip_adress
+        from jin.log
+        where id = #{id}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="LogMap">
+        select
+          id, user, exeu_time, create_date, remark, class_name, method_name, params,ip_adress
+        from jin.log
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="LogMap">
+        select
+          id, user, exeu_time, create_date, remark, class_name, method_name, params,ip_adress
+        from jin.log
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="user != null and user != ''">
+                and username = #{username}
+            </if>
+            <if test="exeuTime != null and exeuTime != ''">
+                and exeu_time = #{exeuTime}
+            </if>
+            <if test="createDate != null and createDate != ''">
+                and create_date = #{createDate}
+            </if>
+            <if test="remark != null and remark != ''">
+                and remark = #{remark}
+            </if>
+            <if test="className != null and className != ''">
+                and class_name = #{className}
+            </if>
+            <if test="methodName != null and methodName != ''">
+                and method_name = #{methodName}
+            </if>
+            <if test="params != null and params != ''">
+                and params = #{params}
+            </if>
+            <if test="ipAdress != null and ipAdress != ''">
+                and ip_adress = #{ipAdress}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into jin.log(user, exeu_time, create_date, remark, class_name, method_name, params,ip_adress)
+        values (#{user}, #{exeuTime}, #{createDate}, #{remark}, #{className}, #{methodName}, #{params},#{ipAdress})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update jin.log
+        <set>
+            <if test="user != null and user != ''">
+                username = #{username},
+            </if>
+            <if test="exeuTime != null and exeuTime != ''">
+                exeu_time = #{exeuTime},
+            </if>
+            <if test="createDate != null and createDate != ''">
+                create_date = #{createDate},
+            </if>
+            <if test="remark != null and remark != ''">
+                remark = #{remark},
+            </if>
+            <if test="className != null and className != ''">
+                class_name = #{className},
+            </if>
+            <if test="methodName != null and methodName != ''">
+                method_name = #{methodName},
+            </if>
+            <if test="params != null and params != ''">
+                params = #{params},
+            </if>
+            <if test="ipAdress != null and ipAdress != ''">
+                ip_adress = #{ipAdress},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from jin.log where id = #{id}
+    </delete>
+
+    <select id="getDate" resultType="String">
+        select create_date from jin.log where id in (select max(id) from jin.log where user=#{id})
+    </select>
+</mapper>

@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+<html lang="en"  xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>留言板</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Free HTML5 Template by FREEHTML5.CO" />
+    <meta name="keywords" content="free html5, free template, free bootstrap, html5, css3, mobile first, responsive" />
+
+    <!-- Facebook and Twitter integration -->
+    <meta property="og:title" content=""/>
+    <meta property="og:image" content=""/>
+    <meta property="og:url" content=""/>
+    <meta property="og:site_name" content=""/>
+    <meta property="og:description" content=""/>
+    <meta name="twitter:title" content="" />
+    <meta name="twitter:image" content="" />
+    <meta name="twitter:url" content="" />
+    <meta name="twitter:card" content="" />
+
+    <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+    <link rel="shortcut icon" href="favicon.ico">
+
+    <link href="https://fonts.googleapis.com/css?family=Montez" rel="stylesheet">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700,300' rel='stylesheet' type='text/css'>
+
+    <!-- Animate.css -->
+    <link rel="stylesheet" href="css/animate.css">
+    <!-- Icomoon Icon Fonts-->
+    <link rel="stylesheet" href="css/icomoon.css">
+    <!-- Bootstrap  -->
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <!-- Superfish -->
+    <link rel="stylesheet" href="css/superfish.css">
+    <!-- Magnific Popup -->
+    <link rel="stylesheet" href="css/magnific-popup.css">
+
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/msg.css">
+
+    <link rel="stylesheet" href="css/msgtext.css">
+
+    <link href="https://cdn.bootcss.com/bootstrap-validator/0.5.3/css/bootstrapValidator.css" rel="stylesheet">
+    <script src="js/jquery.min.js"></script>
+    <!-- Modernizr JS -->
+    <script src="js/modernizr-2.6.2.min.js"></script>
+    <!-- FOR IE9 below -->
+    <!--[if lt IE 9]-->
+    <script src="dist/scripts.min.js"></script>
+    <script src="js/respond.min.js"></script>
+    <!--[endif]-->
+    <!--引入bootstrap表单验证    -->
+    <script src="https://cdn.bootcss.com/bootstrap-validator/0.5.3/js/bootstrapValidator.js"></script>
+    <script src="js/msgSubmit.js"></script>
+</head>
+<body>
+<div id="fh5co-wrapper">
+    <div id="fh5co-page">
+
+        <!--引入头部-->
+        <div th:include="comm/header :: myheader"></div>
+
+        <div id="fh5co-couple" class="fh5co-section-gray">
+            <div class="container">
+                <div th:include="comm/userinfo :: userinfo"></div>
+
+                <form id="msgform">
+                    <div class="row inputText">
+                    <input type="hidden" name="uid" class="uid">
+                    <input type="hidden" name="time" class="time">
+                    <textarea name="msg" class="text-area" placeholder="把想说的话写里面哦~"></textarea>
+                    <input type="button" onclick="msgSumbit()"  value="提交" class="msgsubmit">
+                    </div>
+                </form>
+                <div class="row setting">
+                    <button class="btn btn-default msg-change" onclick="msgChange(1)" >只看我 </button>
+                    <button class="btn btn-default reload" onclick="Reload()">刷新</button>
+                </div>
+                <hr>
+                <p class="tishi">手指在留言上长按有惊喜哦</p>
+                <div class="msgTable row">
+
+                </div>
+            </div>
+        </div>
+
+        <!-- 修改留言模态框       -->
+        <div id="msgModal" class="modal fade" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title">编辑留言</h4>
+                    </div>
+                    <form id="msgEditForm">
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <input type="hidden" class="form-control" name="id" />
+                            </div>
+                            <div class="form-group">
+                                <label>留言日期</label>
+                                <input type="text" class="form-control" name="time" readonly="readonly"  />
+                            </div>
+                            <div class="form-group">
+                                <label>留言内容</label>
+                                     <textarea type="text" class="form-control msg-content" name="msg"  />
+                            </div>
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn"  onclick="msgDelete(this)"  style="float: left">删除</button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                            <button type="submit" class="btn btn-primary">修改</button>
+                        </div>
+                    </form>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->
+
+
+        <!--引入底部-->
+        <div th:include="comm/footer :: myfooter"></div>
+
+        <script>
+
+            $(function () {
+                getData(currentPage,pageSize,0);
+
+            });
+
+        </script>
+
+</div>
+
+</div>
+
+<!-- jQuery -->
+<script src="js/user.js"></script>
+
+</body>
+</html>
